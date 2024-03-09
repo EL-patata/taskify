@@ -13,6 +13,7 @@ import { useMutation } from 'convex/react';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import { Button } from '../ui/button';
 import { Plus } from 'lucide-react';
+import CreateList from './CreateList';
 
 type Card = {
 	_id: Id<'cards'>;
@@ -35,6 +36,7 @@ type Props = {
 		  }[]
 		| undefined;
 	listCards: [{ listId: string; cards: Card[] }];
+	boardId: Id<'boards'>;
 };
 
 const reorder = (list: any, startIndex: any, endIndex: any) => {
@@ -67,7 +69,7 @@ const move = (
 	return result;
 };
 
-export default function Board({ listCards, lists }: Props) {
+export default function Board({ listCards, lists, boardId }: Props) {
 	const [state, setState] = useState<typeof listCards>(listCards);
 
 	const mutate = useMutation(api.cards.updateList);
@@ -156,7 +158,7 @@ export default function Board({ listCards, lists }: Props) {
 	}
 
 	return (
-		<ScrollArea color="#ff0000">
+		<ScrollArea>
 			<div className="flex flex-row p-4 w-full h-screen">
 				<DragDropContext onDragEnd={onDragEnd}>
 					{lists?.map((list, index) => (
@@ -187,14 +189,7 @@ export default function Board({ listCards, lists }: Props) {
 														snapshot.isDragging && 'bg-lime-600'
 													)}
 												>
-													<div
-														style={{
-															display: 'flex',
-															gap: '4px',
-														}}
-													>
-														{item.title}
-													</div>
+													{item.title}
 												</div>
 											)}
 										</Draggable>
@@ -208,9 +203,7 @@ export default function Board({ listCards, lists }: Props) {
 							)}
 						</Droppable>
 					))}
-					<Button variant={'outline'} className="gap-1.5 w-72">
-						Add a List <Plus />
-					</Button>
+					<CreateList boardId={boardId} />
 				</DragDropContext>
 			</div>
 			<ScrollBar

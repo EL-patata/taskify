@@ -28,7 +28,7 @@ const page = async ({ params }: Props) => {
 
 	return (
 		<>
-			<Board lists={lists} listCards={cards} />
+			<Board lists={lists} listCards={cards} boardId={id as any} />
 		</>
 	);
 };

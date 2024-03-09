@@ -22,7 +22,7 @@ const Sidebar = () => {
 	return (
 		<nav
 			className={cn(
-				'h-screen w-20 flex flex-col gap-3 items-center bg-gradient-to-tr from-accent/50 to-background/10 p-4 border-r sticky top-0 left-0 z-[9999] transition-all backdrop-blur',
+				'h-screen w-20 flex flex-col gap-3 items-center bg-gradient-to-tr from-accent/50 to-background/10 p-4 border-r sticky top-0 left-0 z-[10] transition-all backdrop-blur',
 				expand && 'w-72'
 			)}
 		>
