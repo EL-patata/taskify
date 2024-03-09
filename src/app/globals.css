@@ -50,6 +50,10 @@
 	* {
 		@apply border-border selection:bg-primary/70 selection:text-white;
 	}
+	main {
+		max-width: 100vw;
+	}
+
 	body {
 		@apply bg-background text-foreground;
 	}

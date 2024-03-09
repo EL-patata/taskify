@@ -18,15 +18,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={inter.className}>
-				<ConvexClientProvider>
-					<Navbar />
-					<main className="flex flex-col bg-background min-h-[100vh] max-h-screen">
-						{children}
-					</main>
-				</ConvexClientProvider>
-			</body>
-		</html>
+		<ConvexClientProvider>
+			<html lang="en">
+				<body className={inter.className}>{children}</body>
+			</html>
+		</ConvexClientProvider>
 	);
 }

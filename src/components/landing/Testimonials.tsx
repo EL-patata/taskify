@@ -66,9 +66,14 @@ const items = [
 
 const Testimonials = () => {
 	return (
-		<div className="w-full flex items-center justify-center">
-			<InfiniteMovingCards speed="normal" items={items} />
-		</div>
+		<section className="flex flex-col gap-2 items-center">
+			<h2 className="text-3xl font-bold text-primary my-8">
+				See what our users say about Taskify
+			</h2>
+			<div className="w-full flex items-center justify-center">
+				<InfiniteMovingCards speed="normal" items={items} />
+			</div>
+		</section>
 	);
 };
 

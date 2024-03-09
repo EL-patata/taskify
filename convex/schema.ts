@@ -12,15 +12,15 @@ export default defineSchema({
 		title: v.string(),
 		imageUrl: v.optional(v.string()),
 		authorId: v.id('users'),
-	}).searchIndex('search_title', {
-		searchField: 'title',
 	}),
 
 	boards_users: defineTable({
 		boardId: v.id('boards'),
 		userId: v.id('users'),
 		role: v.union(v.literal('ADMIN'), v.literal('USER'), v.literal('CREATOR')),
-	}),
+	})
+		.index('by_userId', ['userId'])
+		.index('by_boardId', ['boardId']),
 
 	lists: defineTable({
 		title: v.string(),

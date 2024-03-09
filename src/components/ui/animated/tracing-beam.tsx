@@ -51,7 +51,7 @@ export const TracingBeam = ({
 			ref={ref}
 			className={cn('relative w-full max-w-7xl mx-auto h-full', className)}
 		>
-			<div className="absolute -left-4 md:-left-20 top-3">
+			<div className="absolute -right-4 md:-right-20 top-3">
 				<motion.div
 					transition={{
 						duration: 0.2,
@@ -72,9 +72,9 @@ export const TracingBeam = ({
 						}}
 						animate={{
 							backgroundColor:
-								scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-500)',
+								scrollYProgress.get() > 0 ? 'white' : 'var(--lime-500)',
 							borderColor:
-								scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-600)',
+								scrollYProgress.get() > 0 ? 'white' : 'var(--lime-600)',
 						}}
 						className="h-2 w-2  rounded-full border border-neutral-300 bg-white"
 					/>
@@ -114,10 +114,10 @@ export const TracingBeam = ({
 							y1={y1} // set y1 for gradient
 							y2={y2} // set y2 for gradient
 						>
-							<stop stopColor="#18CCFC" stopOpacity="0"></stop>
-							<stop stopColor="#18CCFC"></stop>
-							<stop offset="0.325" stopColor="#6344F5"></stop>
-							<stop offset="1" stopColor="#AE48FF" stopOpacity="0"></stop>
+							<stop stopColor="#bef264" stopOpacity="0"></stop>
+							<stop stopColor="#84cc16"></stop>
+							<stop offset="0.325" stopColor="#16a34a"></stop>
+							<stop offset="1" stopColor="#34d399" stopOpacity="0"></stop>
 						</motion.linearGradient>
 					</defs>
 				</svg>

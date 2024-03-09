@@ -1,7 +1,7 @@
 import { fetchQuery } from 'convex/nextjs';
 import Board from '@/components/board/Board';
-import { api } from '../../../../../convex/_generated/api';
-import { Id } from '../../../../../convex/_generated/dataModel';
+import { api } from '../../../../../../convex/_generated/api';
+import { Id } from '../../../../../../convex/_generated/dataModel';
 
 type Props = {
 	params: {

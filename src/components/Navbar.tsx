@@ -1,29 +1,41 @@
-import { LogOut, MessageSquare } from 'lucide-react';
+'use client';
+import { SignInButton, SignOutButton } from '@clerk/nextjs';
+import { LogIn, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, buttonVariants } from './ui/button';
-import { SignOutButton, currentUser } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
-const Navbar = async () => {
-	const user = await currentUser();
+type Props = {
+	user: string | null | undefined;
+};
 
+const Navbar = ({ user }: Props) => {
 	return (
-		<nav className="sticky top-0 z-[9000] flex gap-2 items-center bg-background/10 backdrop-blur-md w-full h-16 px-10 rounded-lg">
+		<nav className="sticky top-0 z-[9000] flex gap-2 items-center bg-background/10 backdrop-blur-md w-7xl mx-auto h-16 px-10 rounded-lg">
 			<Link href={`/`} className="flex items-center gap-1 mr-auto">
 				<Image width={30} height={30} src={`/taskify.svg`} alt="logo" />
 				<h1 className="text-2xl font-bold text-primary">Taskify</h1>
 			</Link>
-			{user ? (
-				<SignOutButton>
-					<Button className="rounded-full p-[6px]" variant={'ghost'}>
-						<LogOut />
-						Signout
+			{!user ? (
+				<SignInButton>
+					<Button variant={`ghost`} className="gap-2">
+						<LogIn />
+						Sign in
 					</Button>
-				</SignOutButton>
+				</SignInButton>
 			) : (
-				<Link href={`/dashboard`} className={buttonVariants({ size: 'lg' })}>
-					Dashboard
-				</Link>
+				<>
+					<SignOutButton signOutCallback={() => redirect(`/`)}>
+						<Button variant={`ghost`} className="gap-2">
+							<LogOut />
+							Sign Out
+						</Button>
+					</SignOutButton>
+					<Link href={`/dashboard`} className={buttonVariants({ size: 'lg' })}>
+						Dashboard
+					</Link>
+				</>
 			)}
 		</nav>
 	);

@@ -5,12 +5,13 @@ export const updateList = mutation({
 	args: {
 		cardId: v.id('cards'),
 		listId: v.id('lists'),
-		order: v.optional(v.number()),
+		order: v.number(),
 	},
 
 	async handler(ctx, args) {
 		return await ctx.db.patch(args.cardId, {
 			listId: args.listId,
+			order: args.order,
 		});
 	},
 });

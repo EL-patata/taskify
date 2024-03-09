@@ -10,6 +10,9 @@ import { useState } from 'react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
 import { useMutation } from 'convex/react';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import { Button } from '../ui/button';
+import { Plus } from 'lucide-react';
 
 type Card = {
 	_id: Id<'cards'>;
@@ -107,6 +110,7 @@ export default function Board({ listCards, lists }: Props) {
 
 			reorderedCards.forEach((card, index) => {
 				card.order = index;
+				mutate({ cardId: card._id, listId: card.listId, order: card.order });
 			});
 
 			sourceList.cards = reorderedCards;
@@ -128,6 +132,7 @@ export default function Board({ listCards, lists }: Props) {
 
 			sourceList.cards.forEach((card, index) => {
 				card.order = index;
+				mutate({ cardId: card._id, listId: card.listId, order: card.order });
 			});
 
 			for (let i = 0; i < sourceList.cards.length; i++) {
@@ -141,35 +146,31 @@ export default function Board({ listCards, lists }: Props) {
 			// Update the order for each card in the destination list
 			destList.cards.forEach((card, index) => {
 				card.order = index;
+				mutate({ cardId: card._id, listId: card.listId, order: card.order });
 			});
 
 			setState(newOrderedData as any);
 
 			console.log(movedCard.order);
-
-			mutate({
-				cardId: movedCard._id as Id<'cards'>,
-				listId: destId as Id<'lists'>,
-			});
 		}
 	}
 
 	return (
-		<div>
-			{JSON.stringify(state[0].listId === 'kn7165kx464rjc5d09h6afnz1h6mm2pf')}
-			<div style={{ display: 'flex' }}>
+		<ScrollArea color="#ff0000">
+			<div className="flex flex-row p-4 w-full h-screen">
 				<DragDropContext onDragEnd={onDragEnd}>
 					{lists?.map((list, index) => (
 						<Droppable key={list._id} droppableId={`${list._id}`}>
 							{(provided, snapshot) => (
-								<div
+								<ScrollArea
 									ref={provided.innerRef}
 									className={cn(
-										'bg-accent/50 min-w-72 mx-8 p-4 rounded',
-										snapshot.isDraggingOver && 'bg-accent'
+										'bg-gradient-to-br from-accent/50 to-background/20 min-w-72 flex gap-3 mx-2 p-5 rounded',
+										snapshot.isDraggingOver && 'bg-accent/70'
 									)}
 									{...provided.droppableProps}
 								>
+									<h2 className="text-sm mb-2 font-semibold">{list.title}</h2>
 									{state[index]?.cards.map((item, index) => (
 										<Draggable
 											key={item._id}
@@ -189,7 +190,7 @@ export default function Board({ listCards, lists }: Props) {
 													<div
 														style={{
 															display: 'flex',
-															justifyContent: 'space-around',
+															gap: '4px',
 														}}
 													>
 														{item.title}
@@ -198,13 +199,24 @@ export default function Board({ listCards, lists }: Props) {
 											)}
 										</Draggable>
 									))}
-									{provided.placeholder}
-								</div>
+									{snapshot.isDraggingOver ? null : (
+										<Button variant={'outline'} className="w-full gap-1.5">
+											Add a Card <Plus />
+										</Button>
+									)}
+								</ScrollArea>
 							)}
 						</Droppable>
 					))}
+					<Button variant={'outline'} className="gap-1.5 w-72">
+						Add a List <Plus />
+					</Button>
 				</DragDropContext>
 			</div>
-		</div>
+			<ScrollBar
+				orientation="horizontal"
+				className="bg-accent/20 p-1 text-red-500"
+			/>
+		</ScrollArea>
 	);
 }
