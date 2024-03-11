@@ -19,6 +19,7 @@ import type * as cards from "../cards.js";
 import type * as clerk from "../clerk.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
+import type * as messages from "../messages.js";
 import type * as users from "../users.js";
 import type * as utils from "../utils.js";
 
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   clerk: typeof clerk;
   http: typeof http;
   lists: typeof lists;
+  messages: typeof messages;
   users: typeof users;
   utils: typeof utils;
 }>;

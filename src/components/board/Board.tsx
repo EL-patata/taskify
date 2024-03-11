@@ -6,14 +6,15 @@ import {
 	DropResult,
 	Droppable,
 } from '@hello-pangea/dnd';
-import { useState } from 'react';
+import { useMutation, useQuery } from 'convex/react';
+import { useEffect, useState } from 'react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
-import { useMutation } from 'convex/react';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
-import { Button } from '../ui/button';
-import { Plus } from 'lucide-react';
+import CreateCard from './CreateCard';
 import CreateList from './CreateList';
+import { Button } from '../ui/button';
+import List from './List';
 
 type Card = {
 	_id: Id<'cards'>;
@@ -26,7 +27,7 @@ type Card = {
 };
 
 type Props = {
-	lists:
+	lists?:
 		| {
 				_id: Id<'lists'>;
 				_creationTime: number;
@@ -35,7 +36,7 @@ type Props = {
 				authorId: Id<'users'>;
 		  }[]
 		| undefined;
-	listCards: [{ listId: string; cards: Card[] }];
+	listCards?: [{ listId: string; cards: Card[] }];
 	boardId: Id<'boards'>;
 };
 
@@ -50,32 +51,16 @@ const reorder = (list: any, startIndex: any, endIndex: any) => {
 /**
  * Moves an item from one list to another list.
  */
-const move = (
-	source: any,
-	destination: any,
-	droppableSource: any,
-	droppableDestination: any
-) => {
-	const sourceClone = Array.from(source);
-	const destClone = Array.from(destination);
-	const [removed] = sourceClone.splice(droppableSource.index, 1);
 
-	destClone.splice(droppableDestination.index, 0, removed);
+export default function Board({ boardId, listCards: state }: Props) {
+	const query = useQuery(api.boards.getLists, { id: boardId });
 
-	const result = {} as any;
-	result[droppableSource.droppableId] = sourceClone;
-	result[droppableDestination.droppableId] = destClone;
-
-	return result;
-};
-
-export default function Board({ listCards, lists, boardId }: Props) {
-	const [state, setState] = useState<typeof listCards>(listCards);
+	const lists = query?.lists;
 
 	const mutate = useMutation(api.cards.updateList);
 
 	function onDragEnd(result: DropResult) {
-		let newOrderedData = [...state];
+		let newOrderedData = [...state!];
 		const { source, destination } = result;
 		if (!destination) {
 			return;
@@ -117,7 +102,7 @@ export default function Board({ listCards, lists, boardId }: Props) {
 
 			sourceList.cards = reorderedCards;
 
-			setState(newOrderedData as any);
+			// setState(newOrderedData as any);
 
 			console.log(newOrderedData);
 
@@ -151,7 +136,7 @@ export default function Board({ listCards, lists, boardId }: Props) {
 				mutate({ cardId: card._id, listId: card.listId, order: card.order });
 			});
 
-			setState(newOrderedData as any);
+			// setState(newOrderedData as any);
 
 			console.log(movedCard.order);
 		}
@@ -161,55 +146,19 @@ export default function Board({ listCards, lists, boardId }: Props) {
 		<ScrollArea>
 			<div className="flex flex-row p-4 w-full h-screen">
 				<DragDropContext onDragEnd={onDragEnd}>
-					{lists?.map((list, index) => (
-						<Droppable key={list._id} droppableId={`${list._id}`}>
-							{(provided, snapshot) => (
-								<ScrollArea
-									ref={provided.innerRef}
-									className={cn(
-										'bg-gradient-to-br from-accent/50 to-background/20 min-w-72 flex gap-3 mx-2 p-5 rounded',
-										snapshot.isDraggingOver && 'bg-accent/70'
-									)}
-									{...provided.droppableProps}
-								>
-									<h2 className="text-sm mb-2 font-semibold">{list.title}</h2>
-									{state[index]?.cards.map((item, index) => (
-										<Draggable
-											key={item._id}
-											draggableId={`${item._id}`}
-											index={index}
-										>
-											{(provided, snapshot) => (
-												<div
-													ref={provided.innerRef}
-													{...provided.draggableProps}
-													{...provided.dragHandleProps}
-													className={cn(
-														'p-4 rounded-md bg-background my-1.5',
-														snapshot.isDragging && 'bg-lime-600'
-													)}
-												>
-													{item.title}
-												</div>
-											)}
-										</Draggable>
-									))}
-									{snapshot.isDraggingOver ? null : (
-										<Button variant={'outline'} className="w-full gap-1.5">
-											Add a Card <Plus />
-										</Button>
-									)}
-								</ScrollArea>
-							)}
-						</Droppable>
+					{lists?.map((list) => (
+						<List
+							key={list._id}
+							boardId={list.boardId}
+							listId={list._id}
+							title={list.title}
+						/>
 					))}
 					<CreateList boardId={boardId} />
 				</DragDropContext>
 			</div>
-			<ScrollBar
-				orientation="horizontal"
-				className="bg-accent/20 p-1 text-red-500"
-			/>
+
+			<ScrollBar orientation="horizontal" className="bg-accent/20 p-1" />
 		</ScrollArea>
 	);
 }

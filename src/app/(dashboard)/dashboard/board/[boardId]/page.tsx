@@ -1,7 +1,6 @@
-import { fetchQuery } from 'convex/nextjs';
 import Board from '@/components/board/Board';
+import { fetchQuery } from 'convex/nextjs';
 import { api } from '../../../../../../convex/_generated/api';
-import { Id } from '../../../../../../convex/_generated/dataModel';
 
 type Props = {
 	params: {
@@ -9,26 +8,28 @@ type Props = {
 	};
 };
 
+export const dynamic = 'force-dynamic';
+
 const page = async ({ params }: Props) => {
 	const id = params.boardId as string;
 
-	const lists = await fetchQuery(api.boards.getLists, {
-		id: id as Id<'boards'>,
-	});
+	const query = await fetchQuery(api.cards.getLists, { id: id as any });
 
-	let cards: any = [];
+	let cardLists = [];
 
-	for (let i = 0; i < lists.length; i++) {
-		const result = await fetchQuery(api.lists.getCards, {
-			id: lists[i]._id as Id<'lists'>,
-		});
+	if (query.lists) {
+		for (let i = 0; i < query.lists.length; i++) {
+			const listId = query.lists?.at(i)?._id!;
+			const boardId = query.lists?.at(i)?.boardId!;
+			const cards = await fetchQuery(api.cards.getCards, { listId });
 
-		cards.push({ listId: lists[i]._id, cards: result });
+			cardLists.push({ listId, cards: cards });
+		}
 	}
 
 	return (
 		<>
-			<Board lists={lists} listCards={cards} boardId={id as any} />
+			<Board boardId={id as any} listCards={query.cards as any} />
 		</>
 	);
 };

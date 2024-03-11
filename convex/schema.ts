@@ -6,11 +6,12 @@ export default defineSchema({
 		userId: v.string(),
 		email: v.string(),
 		userName: v.string(),
+		image: v.optional(v.string()),
 	}).index('by_userId', ['userId']),
 
 	boards: defineTable({
 		title: v.string(),
-		imageUrl: v.optional(v.string()),
+		imageUrl: v.string(),
 		authorId: v.id('users'),
 	}),
 
@@ -34,6 +35,7 @@ export default defineSchema({
 		order: v.number(),
 		authorId: v.id('users'),
 		listId: v.id('lists'),
+		boardId: v.id('boards'),
 	}),
 
 	messages: defineTable({

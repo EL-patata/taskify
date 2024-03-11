@@ -11,7 +11,7 @@ const Boards = () => {
 
 	return (
 		<main className="flex flex-col w-screen">
-			<div className="w-screen lg:max-w-screen-xl mx-auto min-h-[50vh] h-full bg-accent/10">
+			<div className="w-screen lg:max-w-screen-xl mx-auto min-h-[50vh] h-full ">
 				<div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{boards?.map((board, index) => (
 						<Link

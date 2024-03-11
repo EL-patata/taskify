@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import NavLink from './NavLink';
 import { useParams, usePathname } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Sidebar = () => {
 	const [expand, setExpand] = useState<boolean>(false);
@@ -16,7 +18,6 @@ const Sidebar = () => {
 	const paths = [
 		{ icon: <KanbanSquare />, path: '', label: 'Board' },
 		{ icon: <MessageCircle />, path: '/chat', label: 'Chat' },
-		{ icon: <Files />, path: '/files', label: 'Files' },
 	];
 
 	return (
@@ -26,6 +27,9 @@ const Sidebar = () => {
 				expand && 'w-72'
 			)}
 		>
+			<Link href={`/`}>
+				<Image src="/taskify.svg" width={40} height={40} alt="LOGO" />
+			</Link>
 			{paths.map((path) => (
 				<NavLink
 					key={path.path}

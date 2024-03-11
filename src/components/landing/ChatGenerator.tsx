@@ -2,69 +2,47 @@
 import { useInterval } from '@/hooks/useInterval';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useState } from 'react';
+import Message from '../chat/Message';
 
 const ChatGenerator = () => {
 	const generatedMessage = [
 		{
+			username: 'James Doe',
 			message: 'Hey john do you have the plan PDF?',
-			image: (
-				<img
-					alt="avatar preview"
-					src="https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=2563eb%2C4f46e5&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user"
-					className="rounded-full"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=2563eb%2C4f46e5&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user',
 		},
 		{
+			username: 'John Doe',
 			message: 'Nope',
-			image: (
-				<img
-					alt="avatar preview"
-					className="rounded-full"
-					src="https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=84cc16%2Ca3e635&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=84cc16%2Ca3e635&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user',
 		},
 		{
+			username: 'John Doe',
 			message: 'Maybe Jane has it',
-			image: (
-				<img
-					alt="avatar preview"
-					className="rounded-full"
-					src="https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=84cc16%2Ca3e635&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=84cc16%2Ca3e635&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user',
 		},
 		{
+			username: 'Jane Doe',
 			message: 'I have the file',
-			image: (
-				<img
-					alt="avatar preview"
-					src="https://img.clerk.com/preview.png?size=50&seed=seed&initials=AD&isSquare=true&bgType=marble&bgColor=c026d3%2Cec4899&fgType=silhouette&fgColor=FFFFFF&type=user"
-					className="rounded-full"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&seed=seed&initials=AD&isSquare=true&bgType=marble&bgColor=c026d3%2Cec4899&fgType=silhouette&fgColor=FFFFFF&type=user',
 		},
 		{
+			username: 'Jane Doe',
 			message: 'Just uploaded it to the dashboard',
-			image: (
-				<img
-					alt="avatar preview"
-					src="https://img.clerk.com/preview.png?size=50&seed=seed&initials=AD&isSquare=true&bgType=marble&bgColor=c026d3%2Cec4899&fgType=silhouette&fgColor=FFFFFF&type=user"
-					className="rounded-full"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&seed=seed&initials=AD&isSquare=true&bgType=marble&bgColor=c026d3%2Cec4899&fgType=silhouette&fgColor=FFFFFF&type=user',
 		},
 		{
+			username: 'James Doe',
 			message: 'Thanks Jane!',
-			image: (
-				<img
-					alt="avatar preview"
-					src="https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=2563eb%2C4f46e5&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user"
-					className="rounded-full"
-				/>
-			),
+			image:
+				'https://img.clerk.com/preview.png?size=50&amp;seed=seed&amp;initials=AD&amp;isSquare=true&amp;bgType=marble&amp;bgColor=2563eb%2C4f46e5&amp;fgType=silhouette&amp;fgColor=FFFFFF&amp;type=user',
 		},
 	];
 	const [messages, setMessage] = useState<typeof generatedMessage>([]);
@@ -90,38 +68,41 @@ const ChatGenerator = () => {
 	}, 1000);
 
 	return (
-		<div className="h-[520px] rounded-lg  w-full lg:max-w-7xl mx-auto  flex flex-col bg-gradient-to-tr from-accent/50 to-background/20  p-2">
-			{messages.map((message, _index) => {
-				if (_index === messages.length - 1) {
-					return (
-						<motion.div
-							key={_index * index}
-							id={`${_index}`}
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ duration: 0.1 }}
-							className={cn(
-								'p-4 w-full bg-background/10 rounded transition-all flex items-center gap-3 font-semibold'
-							)}
-						>
-							{message.image}
-							{message.message}
-						</motion.div>
-					);
-				} else
-					return (
-						<motion.div
-							key={_index * index}
-							id={`${_index}`}
-							className={cn(
-								'p-4 w-full bg-background/10 rounded transition-all flex items-center gap-3 font-semibold'
-							)}
-						>
-							{message.image}
-							{message.message}
-						</motion.div>
-					);
-			})}
+		<div className="h-[520px] rounded-lg  w-full lg:max-w-7xl mx-auto  flex flex-col bg-dot-primary-hsl/[0.3]  relative   p-2">
+			<div className="p-4 my-auto  bg-gradient-to-tr flex flex-col-reverse  from-accent/50 to-background/20">
+				{messages.map((message, _index) => {
+					if (_index === messages.length - 1) {
+						return (
+							<motion.div
+								key={_index * index}
+								id={`${_index}`}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.1 }}
+							>
+								<Message
+									id={`${message.message}` as any}
+									createdAt={Date.now()}
+									image={message.image}
+									text={message.message}
+									userName={message.username}
+								/>
+							</motion.div>
+						);
+					} else
+						return (
+							<motion.div key={_index * index} id={`${_index}`}>
+								<Message
+									id={`${message.message}` as any}
+									createdAt={Date.now()}
+									image={message.image}
+									text={message.message}
+									userName={message.username}
+								/>{' '}
+							</motion.div>
+						);
+				})}
+			</div>
 		</div>
 	);
 };

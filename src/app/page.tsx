@@ -6,6 +6,7 @@ import { Spotlight } from '@/components/ui/animated/spotlight';
 import { TracingBeam } from '@/components/ui/animated/tracing-beam';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { SignInButton, currentUser } from '@clerk/nextjs';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const page = async () => {
@@ -49,19 +50,59 @@ const page = async () => {
 				className="w-full mx-auto"
 				style={{ WebkitOverflowScrolling: 'unset' }}
 			>
-				<TracingBeam>
-					<div className="grid grid-cols-2 min-h-[100vh]">
-						<div className="flex items-center justify-center">
-							<h2 className="text-3xl text-primary font-bold">
-								With realtime chat communication.
-							</h2>
-							<p>Stay connected with your team through chat</p>
-						</div>
-						<div className="sticky top-24 h-fit">
-							<ChatGenerator />
+				<div className="grid min-h-[150vh]">
+					<div className="flex flex-col items-center justify-center">
+						<h2 className="text-3xl text-primary font-bold">
+							With realtime chat communication.
+						</h2>
+						<p className="max-w-[60ch] text-center text-muted-foreground text-lg font-semibold">
+							Stay connected with your team through chat powered by websockets,
+							The chat is realtime and supports optimistic updates
+						</p>
+					</div>
+					<div className="sticky  h-fit">
+						<ChatGenerator />
+					</div>
+				</div>
+				<div>
+					<div className="flex flex-col items-center justify-center">
+						<h2 className="text-3xl text-primary font-bold">
+							And a Modern-looking Dashboard for your tasks.
+						</h2>
+						<p className="max-w-[60ch] text-center text-muted-foreground text-lg font-semibold">
+							Stay connected with your team through chat powered by websockets,
+							The chat is realtime and supports optimistic updates
+						</p>
+					</div>
+					<div className="mx-auto max-w-6xl px-6 lg:px-8">
+						<div className="mt-16 flow-root sm:mt-24">
+							<div className="-m-2 rounded-xl bg-accent/50 p-2 ring-1 ring-inset ring-primary/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+								<Image
+									src="/landing2.png"
+									alt="uploading preview"
+									width={1419}
+									height={732}
+									quality={100}
+									className="rounded-md bg-background p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-primary/10"
+								/>
+							</div>
 						</div>
 					</div>
-				</TracingBeam>
+					<div className="mx-auto max-w-6xl px-6 lg:px-8">
+						<div className="mt-16 flow-root sm:mt-24">
+							<div className="-m-2 rounded-xl bg-accent/50 p-2 ring-1 ring-inset ring-primary/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+								<Image
+									src="/landing1.png"
+									alt="uploading preview"
+									width={1419}
+									height={732}
+									quality={100}
+									className="rounded-md bg-background p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-primary/10"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
 				<Testimonials />
 			</section>
 		</section>

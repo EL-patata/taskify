@@ -29,6 +29,7 @@ http.route({
 						userName:
 							result.data.username ||
 							`${result.data.first_name} ${result.data.last_name}`,
+						image: result.data.image_url,
 					});
 			}
 
