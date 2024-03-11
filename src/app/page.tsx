@@ -70,8 +70,8 @@ const page = async () => {
 							And a Modern-looking Dashboard for your tasks.
 						</h2>
 						<p className="max-w-[60ch] text-center text-muted-foreground text-lg font-semibold">
-							Stay connected with your team through chat powered by websockets,
-							The chat is realtime and supports optimistic updates
+							A kanban board for you to manage your and your teams' tasks all in
+							one place.
 						</p>
 					</div>
 					<div className="mx-auto max-w-6xl px-6 lg:px-8">
